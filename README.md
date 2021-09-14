@@ -19,6 +19,9 @@ Implementation of a template class BinarySearchTree
   - Memory deallocation (Recursively)
   - Deleting element from a tree, which does not cause elements be out of order 
   - Printing Node value knowing index of a Node 
+  - Iterative Breadth Walk 
+  - Iterative Prefix Walk
+  - Method to check if trees are even
   
   In implementation were used Not STL's queue and stack
   
@@ -41,5 +44,8 @@ Implementation of a template class BinarySearchTree
   - Освобождение памяти (рекурсивно)
   - Удаление элемента из дерева, не нарушающее порядка элементов
   - Вывод информации узла с заданным номером
+  - Итеративный метод обхода двоичного дерева по уровням (в ширину). В реализации использован класс очередь
+  - Итеративный метод обхода двоичного дерева слева направо (префиксный). В реализации использовать класс стек. 
+  - Метод, определяющий являются ли деревья похожими (назовем деревья похожими, если они содержат одинаковые наборы ключей)
 
 В имплементации были использованы Очередь и Стек не из STL
