@@ -1,12 +1,13 @@
-﻿#include "BinaryTreeSearch.h"
 #include <iostream>
+
+#include "BinaryTreeSearch.hpp"
 
 int main()
 {
   BinarySearchTree <int> intTree;
 
   intTree.insert(10);
-  intTree.insert(3); 
+  intTree.insert(3);
   intTree.insert(20);
   intTree.insert(15);
   intTree.insert(30);
@@ -50,14 +51,14 @@ int main()
   std::cout << "\nDeleting the element of the empty tree...\n";
   intTreeZero.deleteKey(5);
 
-  std::cout << "\nThe next element after 20 in intTree is " << 
+  std::cout << "\nThe next element after 20 in intTree is " <<
     intTree.treeSuccessor(20);
-  std::cout << "\nThe height of intTree is " << 
+  std::cout << "\nThe height of intTree is " <<
     intTree.getHeight();
-  std::cout << "\nThe number of elements in intTree is " << 
+  std::cout << "\nThe number of elements in intTree is " <<
     intTree.getCount();
 
-  
+
   std::cout << "\nIterative printing in order intTree...\n";
   intTree.printInOrderIterative();
   std::cout << "\nPrinting in breadth intTree...\n";
@@ -78,8 +79,8 @@ int main()
   secondTree.insert(5);
   secondTree.insert(1);
 
-  std::cout << "\nFirst tree is " << 
-    ((firstTree.isSimilarTo(secondTree)) ? "" : "not ") << 
+  std::cout << "\nFirst tree is " <<
+    ((firstTree.isSimilarTo(secondTree)) ? "" : "not ") <<
     "similar to the second tree.\n";
 
   BinarySearchTree<int> thirdTree;
@@ -97,7 +98,7 @@ int main()
   fourthTree.insert(1);
   fourthTree.insert(7);
 
-  std::cout << "\Third tree is " <<
+  std::cout << "\nThird tree is " <<
     ((thirdTree.isSimilarTo(fourthTree)) ? "" : "not ") <<
     "similar to the fourth tree.\n";
 

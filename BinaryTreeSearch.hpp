@@ -1,17 +1,15 @@
-#ifndef __BINARY_SEARCH_TREE_H
-#define __BINARY_SEARCH_TREE_H
+#ifndef BINARY_SEARCH_TREE_H
+#define BINARY_SEARCH_TREE_H
 
-#include <iostream> 
-#include "StackList.h"
-#include "QueueList.h"
+#include <iostream>
 
-using std::cout;
+#include "StackList.hpp"
+#include "QueueList.hpp"
 
 template <class T>
 class BinarySearchTree
 {
 private:
-  template <class T>
   class Node
   {
   public:
@@ -19,31 +17,32 @@ private:
     Node* left_;
     Node* right_;
     Node* p_;
-    Node(const T& key, Node* left = nullptr, Node* right = nullptr,
+    explicit Node(const T& key, Node* left = nullptr, Node* right = nullptr,
       Node* p = nullptr) :
-      key_(key), left_(left), right_(right), p_(p)
+        key_(key), left_(left), right_(right), p_(p)
     {}
   };
-  Node<T>* root_;
+  Node* root_;
 
 public:
 
-  BinarySearchTree() : root_(nullptr){}
+  BinarySearchTree() : root_(nullptr)
+  {}
 
   virtual ~BinarySearchTree()
   {
     deleteSubTree(root_);
   }
 
-  void print(std::ostream& out)const 
-  { 
-    printNode(out, root_); 
-    out << '\n'; 
+  void print(std::ostream& out)const
+  {
+    printNode(out, root_);
+    out << '\n';
   }
 
   bool iterativeSearch(const T& key)const
   {
-    return (iterativeSearchNode(key) != nullptr);
+    return iterativeSearchNode(key);
   }
 
   int getEvenElements()
@@ -53,33 +52,33 @@ public:
 
   void printInOrder()const
   {
-    inOrderWalk(this->root_);
+    inOrderWalk(root_);
   }
 
   void printInOrderIterative()const
   {
-    inOrderWalkIterative(this->root_);
+    inOrderWalkIterative(root_);
   }
 
   void printInBreadth()const
   {
-    breadthWalk(this->root_);
+    breadthWalk(root_);
   }
 
   void insertRecursive(const T& key)
   {
     insertRecursiveNode(root_, key);
   }
-  void insert(const T& key)
+  bool insert(const T& key)
   {
     if (!root_)
     {
-      root_ = new Node<T>(key);
-      return;
+      root_ = new Node(key);
+      return true;
     }
 
-    Node<T>* temp = root_;
-    Node<T>* current = nullptr;
+    Node* temp = root_;
+    Node* current = nullptr;
 
     while (temp)
     {
@@ -96,14 +95,17 @@ public:
     }
     if (key < current->key_)
     {
-      current->left_ = new Node<T>(key);
+      current->left_ = new Node(key);
       current->left_->p_ = current;
+      return true;
     }
     else if (key > current->key_)
     {
-      current->right_ = new Node<T>(key);
+      current->right_ = new Node(key);
       current->right_->p_ = current;
+      return true;
     }
+    return false;
   }
 
   void deleteKey(const T& key)
@@ -111,8 +113,8 @@ public:
     if (!root_)
       return;
 
-    Node<T>* temp = root_;
-    Node<T>* parent = nullptr;
+    Node* temp = root_;
+    Node* parent = nullptr;
 
     while (temp->key_ != key)
     {
@@ -128,11 +130,11 @@ public:
     {
       if (!parent)
       {
-        
+
         delete temp;
         root_ = nullptr;
       }
-      else if (parent->left_ == temp) 
+      else if (parent->left_ == temp)
       {
         delete temp;
         parent->left_ = nullptr;
@@ -153,7 +155,7 @@ public:
     {
       temp->key_ = temp->right_->key_;
       delete temp->right_;
-      temp->right_ = nullptr; 
+      temp->right_ = nullptr;
     }
     else if (temp->left_ && temp->right_) // оба потомка
     {
@@ -177,7 +179,7 @@ public:
     }
   }
 
-  Node<T>* treeMin(Node<T>* node)const
+  Node* treeMin(Node* node)const
   {
     while (node->left_)
       node = node->left_;
@@ -185,7 +187,7 @@ public:
     return node;
   }
 
-  Node<T>* treeMax(Node<T>* node)const
+  Node* treeMax(Node* node)const
   {
     while (node->right_)
       node = node->right_;
@@ -225,12 +227,12 @@ public:
       return false;
     }
 
-    StackList<Node<T>*> thisStack;
-    StackList<Node<T>*> thatStack;
-    Node<T>* thisTemp = this->root_;
-    Node<T>* thatTemp = thatTree.root_;
+    StackList<Node*> thisStack;
+    StackList<Node*> thatStack;
+    Node* thisTemp = this->root_;
+    Node* thatTemp = thatTree.root_;
 
-    while (thisTemp && thatTemp || !thisStack.isEmpty() || !thatStack.isEmpty())
+    while ((thisTemp && thatTemp) || !thisStack.isEmpty() || !thatStack.isEmpty())
     {
       while(thisTemp)
       {
@@ -255,21 +257,20 @@ public:
     }
     return thisStack.isEmpty() && thatStack.isEmpty();
   }
-
 private:
 
-  int getEvenNodeElements(Node<T>* node)
+  int getEvenNodeElements(Node* node)
   {
     if (!node)
-      return 0; 
-   
-    return ((node->key_ % 2 == 0) ? 1 : 0) + 
+      return 0;
+
+    return ((node->key_ % 2 == 0) ? 1 : 0) +
       getEvenNodeElements(node->left_) + getEvenNodeElements(node->right_);
   }
-  
-  Node<T>* iterativeSearchNode(const T& key)const
+
+  Node* iterativeSearchNode(const T& key)const
   {
-    Node<T>* temp = root_;
+    Node* temp = root_;
 
     while (temp && key != temp->key_)
     {
@@ -280,13 +281,13 @@ private:
     return temp;
   }
 
-  Node<T>* treeNodeSuccessor(Node<T>* node)const
+  Node* treeNodeSuccessor(Node* node)const
   {
     if (node->right_)
     {
       return treeMin(node->right_);
     }
-    Node<T>* temp = node->p_;
+    Node* temp = node->p_;
     while (temp && (node == temp->right_))
     {
       node = temp;
@@ -295,13 +296,13 @@ private:
     return temp;
   }
 
-  Node<T>* treeNodePredecessor(Node<T>* node)const
+  Node* treeNodePredecessor(Node* node)const
   {
     if(node->left_)
     {
       return treeMax(node->left_);
     }
-    Node<T>* temp = node->p_;
+    Node* temp = node->p_;
     while(temp && (node == temp->left_))
     {
       node = temp;
@@ -310,15 +311,15 @@ private:
     return temp;
   }
 
-  void insertRecursiveNode(Node<T>* node, const T& key)
+  void insertRecursiveNode(Node* node, const T& key)
   {
     if (!root_)
     {
-      root_ = new Node<T>(key);
+      root_ = new Node(key);
     }
     else
     {
-      Node<T>* temp = node;
+      Node* temp = node;
 
       if (!node)
         temp = root_;
@@ -327,18 +328,18 @@ private:
       {
         if (temp->right_)
           insertRecursiveNode(temp->right_, key);
-        else temp->right_ = new Node<T>(key);
+        else temp->right_ = new Node(key);
       }
       else if (key < node->key_)
       {
         if (temp->left_)
           insertRecursiveNode(temp->left_, key);
-        else temp->left_ = new Node<T>(key);
+        else temp->left_ = new Node(key);
       }
     }
   }
 
-  void deleteSubTree(Node<T>* node)const
+  void deleteSubTree(Node* node)const
   {
     if (node)
     {
@@ -350,16 +351,13 @@ private:
     }
   }
 
-  int getCountSubTree(Node<T>* node)const
+  int getCountSubTree(Node* node)const
   {
-    if (!node)
-      return 0;
-
-    return (1 + getCountSubTree(node->left_) + 
-                getCountSubTree(node->right_));
+    return node ? (1 + getCountSubTree(node->left_) +
+      getCountSubTree(node->right_)) : 0;
   }
-  
-  int getHeightSubTree(Node<T>* node)const
+
+  int getHeightSubTree(Node* node)const
   {
     if (!node)
       return 0;
@@ -370,7 +368,7 @@ private:
     return (left > right ? left : right) + 1;
   }
 
-  void printNode(std::ostream& out, Node<T>* root)const
+  void printNode(std::ostream& out, Node* root)const
   {
     out << '(';
     if (root)
@@ -382,7 +380,7 @@ private:
     out << ')';
   }
 
-  void inOrderWalk(Node<T>* node)const
+  void inOrderWalk(Node* node)const
   {
     if (node)
     {
@@ -392,10 +390,10 @@ private:
     }
   }
 
-  void inOrderWalkIterative(Node<T>* node)const
+  void inOrderWalkIterative(Node* node)const
   {
-    StackList<Node<T>*> stack;
-    Node<T>* temp = node;
+    StackList<Node*> stack;
+    Node* temp = node;
 
     while(temp || !stack.isEmpty())
     {
@@ -413,14 +411,14 @@ private:
     }
   }
 
-  void breadthWalk(Node<T>* node)const
+  void breadthWalk(Node* node)const
   {
-    QueueList<Node<T>*> queue;
+    QueueList<Node*> queue;
     queue.enQueue(node);
 
     while(!queue.isEmpty())
     {
-      Node<T>* temp = queue.deQueue();
+      Node* temp = queue.deQueue();
       std::cout << temp->key_ << " ";
       if (temp->left_)
         queue.enQueue(temp->left_);
@@ -429,4 +427,4 @@ private:
     }
   }
 };
-#endif //!#__BNARY_SEARCH_TREE
+#endif
