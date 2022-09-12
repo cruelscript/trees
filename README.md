@@ -1,6 +1,6 @@
 # Trees
 
-Here are some implementation of different trees in C++ and Python. 
+Here are some implementations of different trees in C++ and Python. 
 
 ### General Tree
 
@@ -43,7 +43,7 @@ Implemented these features:
   
   In implementation were used Not STL's queue and stack
   
-# C++ Бинарное Дерево Поиска
+### C++ Бинарное Дерево Поиска
   
 1. Для описания узла дерева использовать тип Node, в котором
   - ```key_``` - значение ключа узла,
