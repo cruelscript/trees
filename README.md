@@ -67,3 +67,14 @@ Implemented these features:
   - Метод, определяющий являются ли деревья похожими (назовем деревья похожими, если они содержат одинаковые наборы ключей)
 
 В имплементации были использованы Очередь и Стек не из STL
+
+### Trie
+
+Trie is a prefix tree. Python implementation.
+
+### Heap
+
+Heap is a tree where elements are in ascending or descending order relative to node's children. 
+
+Here is Max heap implementation. Heap rebuilds itself everytime it has been added or removed an element, 
+thus a max element will always be on top.
