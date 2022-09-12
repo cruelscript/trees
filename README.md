@@ -78,3 +78,7 @@ Heap is a tree where elements are in ascending or descending order relative to n
 
 Here is Max heap implementation. Heap rebuilds itself everytime it has been added or removed an element, 
 thus a max element will always be on top.
+
+[Parallel processing](./Heap/parallel.py) - Parallel processing using built-in heap
+
+[Tree Height](./tree_height.cpp)
