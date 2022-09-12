@@ -1,6 +1,24 @@
-# Binary Search Tree
+# Trees
 
-Implementation of a template class BinarySearchTree 
+Here are some implementation of different trees in C++ and Python. 
+
+### General Tree
+
+Naive implementation of a basic concept of a tree as a data structure. 
+
+### Binary Search Tree
+
+#### Python Implementation of a Binary Search Tree
+
+Implemented these features: 
+
+- All-order traversals 
+- Min and Max element in a tree
+- Binary Search in a tree
+- Sum of all elements
+- Build a reverse tree
+
+#### C++ Implementation of a template class BinarySearchTree 
 
 1. Node of the tree contains these elements: 
   - ```key_``` - value of the Node
@@ -25,7 +43,7 @@ Implementation of a template class BinarySearchTree
   
   In implementation were used Not STL's queue and stack
   
-# Бинарное Дерево Поиска
+# C++ Бинарное Дерево Поиска
   
 1. Для описания узла дерева использовать тип Node, в котором
   - ```key_``` - значение ключа узла,
